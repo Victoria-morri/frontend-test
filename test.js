@@ -10,12 +10,12 @@
 /**
  * Класс для работы с API
  *
- * @author		User Name 
+ * @author		User Name
  * @version		v.1.0 (dd/mm/yyyy)
  */
 class Api
 {
-	constructor() 
+	constructor()
 	{
 
 	}
@@ -24,18 +24,30 @@ class Api
 	/**
 	 * Заполняет строковый шаблон template данными из объекта object
 	 *
-	 * @author		User Name 
+	 * @author		User Name
 	 * @version		v.1.0 (dd/mm/yyyy)
 	 * @param		{object} object
 	 * @param		{string} template
 	 * @return		{string}
 	 */
+	get_valid_value(object, str)
+	{
+		let newStr = object[str.slice(2, str.length - 1)].toString();
+
+		if (newStr.match(/\s/g)) {
+			newStr.match(/\s/g).forEach((space) => {
+				newStr = newStr.replace(space, `%${object.id}`);
+				})
+		}
+		return  `/${newStr}`;
+	}
+
 	get_api_path(object, template)
 	{
-		let result = '';
-
-		/* Здесь ваш код */
-
+		let result = template;
+		template.match(/(\/%[a-z]*%)/g).forEach((elem) => {
+			result = result.replace(elem, this.get_valid_value(object, elem));
+		})
 		return result;
 	}
 }
