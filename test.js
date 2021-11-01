@@ -37,7 +37,7 @@ class Api
 		if (newStr.match(/\s/g)) {
 			newStr.match(/\s/g).forEach((space) => {
 				newStr = newStr.replace(space, `%${object.id}`);
-				})
+			})
 		}
 		return  `/${newStr}`;
 	}
